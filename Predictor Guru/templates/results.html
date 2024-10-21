@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results - Predictor Guru</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #FFF3E0;
+}
+.container {
+    padding-top: 20px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    table-layout: auto;
+}
+th, td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px;
+}
+tr:nth-child(even), tr:nth-child(odd) {
+    background-color: #F6DBC3;
+}
+th {
+    background-color: #F6DBC3;
+    color: black;
+}
+table, th, td {
+    border: 2px solid black; /* Changed from #FF9703 to black */
+}
+h2 {
+    color: #FF9703;
+    margin-top: 20px;
+}
+.navbar {
+    background-color: #FFF3E0 !important;
+    padding: 10px;
+}
+.navbar-brand img {
+    height: 50px;
+}
+.nav-link {
+    color: #FF9703 !important;
+}
+.navbar-nav .nav-link {
+    font-size: 1.2rem;
+    padding: 0 15px;
+}
+@media screen and (max-width: 768px) {
+    table, th, td {
+        font-size: 14px;
+        padding: 8px;
+    }
+    .navbar-brand img {
+        height: 20px;
+    }
+    .container {
+        padding-top: 10px;
+    }
+}
+@media screen and (max-width: 576px) {
+    table, th, td {
+        font-size: 12px;
+        padding: 6px;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Predictor Guru Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/instructions">Instructions</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h2 class="text-center">Results</h2>
+    <div class="table-responsive">
+        {{ table | safe }}
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictor Guru</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #FFF3E0;
+        }
+        .container {
+            padding-top: 20px;
+        }
+        h1 {
+            color: #FF9703;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #FF9703;
+        }
+        .btn-primary {
+            background-color: #FF9703;
+            border-color: #FF9703;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+        }
+        .btn-primary:hover {
+            background-color: #E68A00;
+            border-color: #E68A00;
+        }
+        .navbar {
+            background-color: #FFF3E0 !important;
+            padding: 10px;
+        }
+        .navbar-brand img {
+            height: 40px;
+        }
+        .nav-link {
+            color: #FF9703 !important;
+        }
+        .navbar-nav .nav-link {
+            font-size: 1.2rem;
+            padding: 0 15px;
+        }
+        .navbar-toggler {
+            border-color: #FF9703;
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 151, 3, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        /* Custom dropdown styles */
+        .custom-dropdown {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        .chosen-value,
+        .value-list {
+            width: 100%;
+        }
+        .chosen-value {
+            font-family: 'Arial', sans-serif;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 2px;
+            height: 4rem;
+            font-size: 1rem;
+            padding: 1rem;
+            background-color: #F6DBC3;
+            border: 2px solid #FF9703;
+            transition: .3s ease-in-out;
+        }
+        .chosen-value:hover,
+        .chosen-value:focus,
+        .chosen-value.open {
+            background-color: #FFD8B1;
+            cursor: pointer;
+            outline: 0;
+            box-shadow: 0px 5px 8px 0px rgba(0,0,0,0.2);
+        }
+        .value-list {
+            list-style: none;
+            margin-top: 4rem;
+            box-shadow: 0px 5px 8px 0px rgba(0,0,0,0.2);
+            overflow: hidden;
+            max-height: 0;
+            transition: .3s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #FFF3E0;
+            z-index: 1;
+            padding: 0;
+        }
+        .value-list.open {
+            max-height: 320px;
+            overflow: auto;
+        }
+        .value-list li {
+            position: relative;
+            height: 2rem;
+            background-color: #F6DBC3;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color .3s;
+            opacity: 1;
+            margin: 0;
+            border-bottom: 1px solid #FFD8B1;
+        }
+        .value-list li:last-child {
+            border-bottom: none;
+        }
+        .value-list li:hover {
+            background-color: #FFD8B1;
+        }
+        .value-list li.closed {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0;
+            opacity: 0;
+            border-bottom: none;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .navbar-brand img {
+                height: 30px;
+            }
+            .container {
+                padding-top: 10px;
+            }
+        }
+        @media screen and (max-width: 576px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .navbar-nav {
+                text-align: center;
+            }
+        }
+        #rank {
+            background-color: #F6DBC3;
+            border: 2px solid #FF9703;
+            height: 4rem;
+            font-size: 1rem;
+            padding: 1rem;
+            transition: .3s ease-in-out;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        #rank:hover,
+        #rank:focus {
+            background-color: #FFD8B1;
+            box-shadow: 0px 5px 8px 0px rgba(0,0,0,0.2);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Predictor Guru Logo">
+
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/instructions">Instructions</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="text-center">You're just one click away from predicting your future!!</h1>
+        <form action="/search" method="POST">
+            <div class="form-group custom-dropdown">
+                <label for="seatType">Category:</label>
+                <input class="chosen-value" type="text" value="" placeholder="Select category" id="seatType" name="seat_types">
+                <ul class="value-list">
+                    {% for seat in seat_type_options %}
+                    <li>{{ seat }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="form-group custom-dropdown">
+                <label for="college_name">College Name:</label>
+                <input class="chosen-value" type="text" value="" placeholder="Select college" id="college_name" name="college_name">
+                <ul class="value-list">
+                    {% for college in college_options %}
+                    <li>{{ college }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="form-group custom-dropdown">
+                <label for="branch">Branch:</label>
+                <input class="chosen-value" type="text" value="" placeholder="Select branch" id="branch" name="branches">
+                <ul class="value-list">
+                    {% for branch in branch_options %}
+                    <li>{{ branch }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="form-group custom-dropdown">
+                <label for="district">District:</label>
+                <input class="chosen-value" type="text" value="" placeholder="Select District" id="district" name="districts">
+                <ul class="value-list">
+                    {% for district in district_options %}
+                    <li>{{ district }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="form-group">
+                <label for="rank">Rank:</label>
+                <input type="number" class="form-control" id="rank" name="rank" value="7000" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.custom-dropdown');
+            
+            dropdowns.forEach(dropdown => {
+                const inputField = dropdown.querySelector('.chosen-value');
+                const dropdownList = dropdown.querySelector('.value-list');
+                const dropdownArray = [...dropdownList.querySelectorAll('li')];
+                let valueArray = dropdownArray.map(item => item.textContent.trim());
+                
+                const closeDropdown = () => {
+                    dropdownList.classList.remove('open');
+                }
+                
+                inputField.addEventListener('input', () => {
+                    dropdownList.classList.add('open');
+                    let inputValue = inputField.value.toLowerCase();
+                    
+                    if (inputValue.length > 0) {
+                        for (let j = 0; j < valueArray.length; j++) {
+                            if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
+                                dropdownArray[j].classList.add('closed');
+                            } else {
+                                dropdownArray[j].classList.remove('closed');
+                            }
+                        }
+                    } else {
+                        for (let i = 0; i < dropdownArray.length; i++) {
+                            dropdownArray[i].classList.remove('closed');
+                        }
+                    }
+                });
+                
+                dropdownArray.forEach(item => {
+                    item.addEventListener('click', (evt) => {
+                        inputField.value = item.textContent.trim();
+                        dropdownList.classList.remove('open');
+                    });
+                })
+                
+                inputField.addEventListener('focus', () => {
+                    inputField.placeholder = 'Type to filter';
+                    dropdownList.classList.add('open');
+                    dropdownArray.forEach(dropdown => {
+                        dropdown.classList.remove('closed');
+                    });
+                });
+                
+                inputField.addEventListener('blur', () => {
+                    inputField.placeholder = 'Select option';
+                    setTimeout(() => {
+                        dropdownList.classList.remove('open');
+                    }, 100);
+                });
+                
+                document.addEventListener('click', (evt) => {
+                    const isDropdown = dropdown.contains(evt.target);
+                    const isInput = inputField.contains(evt.target);
+                    if (!isDropdown && !isInput) {
+                        dropdownList.classList.remove('open');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictor Guru</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #FFF3E0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .navbar-nav .nav-link {
+            font-size: 1.2rem;
+            padding: 0 15px;
+        }
+        .main-content {
+            text-align: center;
+            color: #333;
+            max-width: 800px;
+            width: 100%;
+            padding-top: 20px;
+        }
+        p {
+            font-size: 2.3rem;
+            margin-top: 20px;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+        }
+        .logo-image {
+            max-width: 650px; /* Make the image smaller */
+            width: 100%;
+        }
+        .exam-box {
+            background-color: #FFF3E0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .btn-exam {
+            background-color: #FF9703;
+            margin: 10px;
+            font-size: 1.2rem;
+            padding: 10px 30px;
+            border: none;
+            transition: background-color 0.3s ease;
+            width: 250px; /* Set fixed width for uniformity */
+            text-align: center; /* Center-align the text */
+        }
+        .btn-exam:hover {
+            background-color: #E68A00;
+        }
+        .btn-exam:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .btn-exam:disabled:hover {
+            background-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Predictor Guru Logo" class="logo-image">
+    </div>
+    <div class="container main-content">
+        <p>Your guide to finding the best engineering colleges based on your CET scores</p>
+        <p>Explore various colleges, branches, and categories. Make informed decisions with our easy-to-use predictor tool.</p>
+        <div class="exam-box">
+            <h3>Select Your Examination</h3>
+            <button onclick="redirectTo('cet')" class="btn btn-lg btn-exam">Predict CET Colleges</button>
+            <button onclick="redirectTo('jee')" class="btn btn-lg btn-exam" disabled>Predict JEE Colleges</button>
+        </div>
+    </div>
+    <script>
+        function redirectTo(exam) {
+            if (exam === 'cet') {
+                window.location.href = '/cet'; // Redirect to the CET form page
+            } else {
+                alert('JEE option is not available yet.');
+            }
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
